@@ -1,0 +1,56 @@
+<!-- sell.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell</title>
+    <style>
+        h1, h2 {
+            text-align: center;
+        }
+        .dropdown {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #category-section {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Website Name</h1>
+    <h2>Sell</h2>
+    
+    <div class="dropdown">
+        <label for="gender">Select Gender:</label>
+        <select id="gender" onchange="showCategories()">
+            <option value="">--Choose Gender--</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+    </div>
+    
+    <div id="category-section">
+        <h3>Select Category:</h3>
+        <ul>
+            <li>Shoes</li>
+            <li>Clothes</li>
+            <li>Wine</li>
+        </ul>
+    </div>
+
+    <script>
+        function showCategories() {
+            const gender = document.getElementById('gender').value;
+            const categorySection = document.getElementById('category-section');
+            if (gender) {
+                categorySection.style.display = 'block';
+            } else {
+                categorySection.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

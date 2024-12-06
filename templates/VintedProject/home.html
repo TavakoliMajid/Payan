@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Website</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'sign_up' %}">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome to Our Website</h1>
+
+        <!-- Image Map for 1.png -->
+        <img src="{% static 'VintedProject/static/VintedProject/1.png' %}" usemap="#image-map" class="image-map">
+        <map name="image-map">
+            <area target="" alt="Account" title="Account" href="#" coords="1214,580,1303,679" shape="rect">
+            <area target="" alt="Search Bar" title="Search Bar" href="#" coords="194,601,524,597,524,667,194,662,195,630" shape="poly">
+            <area target="" alt="Search" title="Search" href="#" coords="130,632,39" shape="circle">
+            <area target="" alt="LOGO" title="LOGO" href="#" coords="681,97,50" shape="circle">
+        </map>
+
+        <!-- Image Map for 2.png -->
+        <img src="{% static 'VintedProject/static/VintedProject/2.png' %}" usemap="#buy-sell-map" class="image-map">
+        <map name="buy-sell-map">
+            <area target="" alt="Sell" title="Sell" href="#" coords="31,9,630,742" shape="rect">
+            <area target="" alt="Buy" title="Buy" href="#" coords="724,7,1343,742" shape="rect">
+        </map>
+
+        <!-- Popup Window for Sell/Buy -->
+        <div id="popup-window" class="popup hidden">
+            <div class="popup-content">
+                <h2>Select Gender</h2>
+                <div class="gender-icons">
+                    <img src="{% static 'VintedProject/static/VintedProject/Icons/Man.png' %}" alt="Male" class="gender-icon">
+                    <img src="{% static 'VintedProject/static/VintedProject/Icons/Woman.png' %}" alt="Female" class="gender-icon">
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Area for "About Us" Text -->
+    <footer>
+        <p>About Us: Pesar Porarab Pedaresh SAGE</p>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

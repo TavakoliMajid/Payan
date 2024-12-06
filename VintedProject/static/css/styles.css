@@ -1,0 +1,47 @@
+/* Ensure images fit the screen */
+img {
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    object-fit: cover; /* Ensure the image scales properly */
+    display: block; /* Remove extra space below the image */
+}
+
+/* Popup window styling */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hidden */
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.gender-icons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.gender-icon {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.image-map {
+    width: 100%;
+    height: auto;
+    display: block;
+}

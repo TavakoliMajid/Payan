@@ -1,0 +1,29 @@
+<!-- VintedProject/templates/VintedProject/contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{% static 'VintedProject/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'sign_up' %}">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Contact Us</h2>
+        <p>Instagram: <a href="https://www.instagram.com/meitipp?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">@Pedar_SAG</a></p>
+        <p>Email: <a href="mailto:majidtavakoli1997@gmail.com">Engineer Tavakoli</a></p>
+        <p>Telegram: <a href="https://t.me/majidtavakoli7" target="_blank">Telegram Engineer Tavakoli</a></p>
+    </main>
+</body>
+</html>

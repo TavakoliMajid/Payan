@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell or Buy</title>
+    <link rel="stylesheet" href="{% static 'VintedProject/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Your Website Name</h1>
+    </header>
+
+    <main>
+        <!-- Sell or Buy Options -->
+        <div class="options">
+            <button onclick="selectOption('sell')">Sell</button>
+            <button onclick="selectOption('buy')">Buy</button>
+        </div>
+
+        <!-- Gender Selection -->
+        <div id="genderSelection" class="gender-selection">
+            <div class="icon" id="maleIcon" onclick="selectGender('male')">
+                <img src="{% static 'images/male-icon.png' %}" alt="Male Icon">
+            </div>
+            <div class="icon" id="femaleIcon" onclick="selectGender('female')">
+                <img src="{% static 'images/female-icon.png' %}" alt="Female Icon">
+            </div>
+        </div>
+
+        <!-- Categories Dropdown -->
+        <div id="categoryMenu" class="category-menu" style="display: none;">
+            <div id="menCategories" class="sub-menu">
+                <button onclick="selectCategory('men-shoes')">Shoes</button>
+                <button onclick="selectCategory('men-clothes')">Clothes</button>
+            </div>
+            <div id="womenCategories" class="sub-menu">
+                <button onclick="selectCategory('women-shoes')">Shoes</button>
+                <button onclick="selectCategory('women-clothes')">Clothes</button>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script>
+    function selectOption(option) {
+        document.getElementById('genderSelection').style.display = 'flex';
+        document.getElementById('categoryMenu').style.display = 'none';
+    }
+
+    function selectGender(gender) {
+        document.getElementById('genderSelection').style.display = 'none';
+        document.getElementById('categoryMenu').style.display = 'block';
+
+        if (gender === 'male') {
+            document.getElementById('menCategories').style.display = 'block';
+            document.getElementById('womenCategories').style.display = 'none';
+        } else {
+            document.getElementById('menCategories').style.display = 'none';
+            document.getElementById('womenCategories').style.display = 'block';
+        }
+    }
+</script>
+</html>

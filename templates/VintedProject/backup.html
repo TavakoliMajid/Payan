@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Website</title>
+    <link rel="stylesheet" href="{% static 'VintedProject/styles.css' %}">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'sign_up' %}">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Welcome to Our Website</h1>
+
+        <!-- Sell and Buy Selection Buttons -->
+        <div class="menu-container">
+            <button onclick="window.location.href='{% url 'sell' %}'">Sell</button>
+            <button onclick="window.location.href='{% url 'buy' %}'">Buy</button>
+        </div>
+    </main>
+
+    <!-- Footer Area for "About Us" Text -->
+    <footer>
+        <p>About Us: Pesar Porarab Pedaresh SAGE</p>
+    </footer>
+
+    <style>
+        /* Optional CSS for positioning and styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0;
+        }
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        .menu-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</body>
+</html>
