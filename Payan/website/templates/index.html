@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>پایان | خرید و فروش لباس های دست دوم</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- ========== Header ========== -->
+  <header>
+    <div class="logo">
+      <img src="https://via.placeholder.com/40" alt="Logo">
+      <span>پایان</span>
+    </div>
+    <div class="title">
+      <h1>پایان | خرید و فروش لباس های دست دوم</h1>
+    </div>
+    <div class="nav-icons">
+      <span title="سبد خرید">&#128722;</span>
+      <span title="ورود/ثبت نام">&#128100;</span>
+    </div>
+  </header>
+
+  <!-- ========== Hero Section ========== -->
+  <section class="hero">
+    <div class="hero-button" id="buyBtn" onclick="window.location.href='buy.html'">
+      <img src="https://via.placeholder.com/400x200?text=خرید" alt="Buy Illustration">
+      <div class="label">خرید</div>
+    </div>
+    <div class="hero-button" id="sellBtn" onclick="window.location.href='sell.html'">
+      <img src="https://via.placeholder.com/400x200?text=فروش" alt="Sell Illustration">
+      <div class="label">فروش</div>
+    </div>
+  </section>
+
+  <!-- ========== Product Grid Section ========== -->
+  <section class="product-grid">
+    <div class="product-card">
+      <img src="https://via.placeholder.com/300x200?text=محصول" alt="Product Image">
+      <span class="favorite-icon">&#9829;</span>
+      <div class="product-info">
+        <p><strong>فروشنده:</strong> user123</p>
+        <p><strong>برند:</strong> NO LABEL</p>
+        <p><strong>سایز:</strong> S</p>
+        <p><strong>وضعیت:</strong> خوب</p>
+        <p><strong>قیمت:</strong> $25</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Bubble Selection ========== -->
+  <div class="bubble-container" id="bubbleContainer">
+    <div class="bubble" id="maleBubble" title="مرد">👨</div>
+    <div class="bubble" id="femaleBubble" title="زن">👩</div>
+    <div class="bubble-options" id="styleOptions">
+      <div class="bubble" id="formalBubble" title="رسمی">🤵</div>
+      <div class="bubble" id="casualBubble" title="کژوال">👕</div>
+    </div>
+  </div>
+
+  <!-- ========== Footer ========== -->
+  <footer>
+    <p>ارتباط با ما: example@mail.com</p>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* Hide bubbles initially */
+#bubbles-container {
+    display: none; /* Hidden by default */
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Style each bubble */
+.bubble {
+    padding: 10px 15px;
+    margin: 5px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Show bubbles when the "show" class is added */
+#bubbles-container.show {
+    display: block;
+}
+
+/* Buy Button */
+.buy-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buy-btn:hover {
+    background-color: #0056b3;
+}
