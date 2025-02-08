@@ -1,71 +1,204 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>پایان | خرید و فروش لباس های دست دوم</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Payan</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* General Styling */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #EAE7DC; /* Cream */
+            color: #3E6259; /* Sage Green */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            scroll-behavior: smooth; /* Smooth scrolling */
+            transition: opacity 1s ease-in-out; /* Page transition */
+        }
+
+        /* Header with Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #3E6259;
+            padding: 15px 40px;
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            top :0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .top-nav .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-buttons button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+
+        .nav-buttons button:hover {
+            color: #F4D06F;
+        }
+
+        /* Header Section */
+        .header {
+            position: relative;
+            width: 100%;
+        }
+
+        .header img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .header-text {
+            position: absolute;
+            top: 100%;
+            right: 5%;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: right;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .header-text:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Typing Animation */
+        h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #3E6259;
+            width: 0;
+            animation: typing 3s steps(30, end) forwards, blink 0.6s infinite;
+            text-align: right !important;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Buttons with Icons */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            gap: 20px;
+        }
+
+        .button {
+            background-color: #F4D06F;
+            color: #3E6259;
+            padding: 20px 40px;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s ease-in-out, background-color 0.3s;
+        }
+
+        .button i {
+            font-size: 20px;
+            animation: bounceIcon 1.5s infinite;
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .button:hover {
+            background-color: #A14D3A;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #3E6259;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer a {
+            color: #F4D06F;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+    </style>
 </head>
 <body>
 
-  <!-- ========== Header ========== -->
-  <header>
-    <div class="logo">
-      <img src="https://via.placeholder.com/40" alt="Logo">
-      <span>پایان</span>
+    <!-- Navigation Bar -->
+    <div class="top-nav">
+        <h3>Payan</h3>
+        <div class="nav-buttons">
+            <button><i class="fas fa-search"></i> Search</button>
+            <button><i class="fas fa-user"></i> Log In</button>
+        </div>
     </div>
-    <div class="title">
-      <h1>پایان | خرید و فروش لباس های دست دوم</h1>
-    </div>
-    <div class="nav-icons">
-      <span title="سبد خرید">&#128722;</span>
-      <span title="ورود/ثبت نام">&#128100;</span>
-    </div>
-  </header>
 
-  <!-- ========== Hero Section ========== -->
-  <section class="hero">
-    <div class="hero-button" id="buyBtn" onclick="window.location.href='buy.html'">
-      <img src="https://via.placeholder.com/400x200?text=خرید" alt="Buy Illustration">
-      <div class="label">خرید</div>
-    </div>
-    <div class="hero-button" id="sellBtn" onclick="window.location.href='sell.html'">
-      <img src="https://via.placeholder.com/400x200?text=فروش" alt="Sell Illustration">
-      <div class="label">فروش</div>
-    </div>
-  </section>
+    <div class="main-content">
+        <!-- Header with Image -->
+        padding-top: 60px;
+        <div class="header">
+            <img src="{% static 'images/header-min.png' %}" alt="Website Header">
+            <div class="header-text">
+                <h1>Welcome to Payan</h1>
+            </div>
+        </div>
 
-  <!-- ========== Product Grid Section ========== -->
-  <section class="product-grid">
-    <div class="product-card">
-      <img src="https://via.placeholder.com/300x200?text=محصول" alt="Product Image">
-      <span class="favorite-icon">&#9829;</span>
-      <div class="product-info">
-        <p><strong>فروشنده:</strong> user123</p>
-        <p><strong>برند:</strong> NO LABEL</p>
-        <p><strong>سایز:</strong> S</p>
-        <p><strong>وضعیت:</strong> خوب</p>
-        <p><strong>قیمت:</strong> $25</p>
-      </div>
+        <!-- Buttons with Icons -->
+        <div class="button-container">
+            <button class="button"><i class="fas fa-compass"></i> Explore More</button>
+            <button class="button"><i class="fas fa-users"></i> Join Now</button>
+        </div>
     </div>
-  </section>
 
-  <!-- ========== Bubble Selection ========== -->
-  <div class="bubble-container" id="bubbleContainer">
-    <div class="bubble" id="maleBubble" title="مرد">👨</div>
-    <div class="bubble" id="femaleBubble" title="زن">👩</div>
-    <div class="bubble-options" id="styleOptions">
-      <div class="bubble" id="formalBubble" title="رسمی">🤵</div>
-      <div class="bubble" id="casualBubble" title="کژوال">👕</div>
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>
+            <a href="#">About Us</a> |
+            <a href="#">Contact Us</a>
+        </p>
     </div>
-  </div>
 
-  <!-- ========== Footer ========== -->
-  <footer>
-    <p>ارتباط با ما: example@mail.com</p>
-  </footer>
-
-  <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
