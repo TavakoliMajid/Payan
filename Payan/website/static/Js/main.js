@@ -1,17 +1,60 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const buyButton = document.getElementById("buy-button");
-    const bubblesContainer = document.getElementById("bubbles-container");
+    const bubbleContainer = document.getElementById("bubble-container");
 
-    // Show bubbles when clicking the Buy button
-    buyButton.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent immediate hiding when clicking the button
-        bubblesContainer.classList.toggle("show");
+    const optionsState = {
+        firstSelection: null,
+        gender: null,
+        clothingType: null,
+    };
+
+    buyButton.addEventListener("click", () => {
+        renderBubbles(["Formal", "Informal"], "firstSelection");
     });
 
-    // Hide bubbles when clicking outside of them
-    document.addEventListener("click", function (event) {
-        if (!bubblesContainer.contains(event.target) && event.target !== buyButton) {
-            bubblesContainer.classList.remove("show");
+    function renderBubbles(options, type) {
+        bubbleContainer.innerHTML = ""; // Clear previous bubbles
+
+        options.forEach(option => {
+            const bubble = document.createElement("div");
+            bubble.className = "bubble";
+            bubble.textContent = option;
+
+            bubble.addEventListener("click", () => {
+                handleSelection(type, option);
+                bubbleContainer.innerHTML = ""; // Remove bubbles
+            });
+
+            bubbleContainer.appendChild(bubble);
+        });
+    }
+
+    function handleSelection(type, selection) {
+        optionsState[type] = selection;
+        updateSummary();
+
+        if (type === "firstSelection") {
+            if (selection === "Formal") {
+                renderBubbles(["Male", "Female", "Child"], "gender");
+            } else {
+                renderBubbles(["Male", "Female", "Child"], "gender");
+            }
+        } else if (type === "gender") {
+            renderBubbles(["Clothing", "Shoes"], "clothingType");
         }
-    });
+    }
+
+    function updateSummary() {
+        const summary = Object.values(optionsState)
+            .filter(value => value)
+            .join(", ");
+
+        const summaryDiv = document.querySelector(".selected-options");
+        if (!summaryDiv) {
+            const newSummaryDiv = document.createElement("div");
+            newSummaryDiv.className = "selected-options";
+            bubbleContainer.insertAdjacentElement("beforebegin", newSummaryDiv);
+        }
+        document.querySelector(".selected-options").textContent = summary;
+    }
 });
