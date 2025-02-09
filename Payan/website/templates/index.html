@@ -22,7 +22,7 @@
             transition: opacity 1s ease-in-out; /* Page transition */
         }
 
-        /* Header with Navigation */
+        /* Navigation Bar */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -31,11 +31,6 @@
             padding: 15px 40px;
             color: white;
             width: 100%;
-            box-sizing: border-box;
-            position: fixed;
-            top :0;
-            left: 0;
-            z-index: 1000;
         }
 
         .top-nav .nav-buttons {
@@ -48,8 +43,7 @@
             border: none;
             color: white;
             cursor: pointer;
-            font-size: 16px;
-            padding: 10px 15px;
+            font-size: 18px;
         }
 
         .nav-buttons button:hover {
@@ -60,20 +54,17 @@
         .header {
             position: relative;
             width: 100%;
-            text-align: right;
-            margin-right: auto;
-            padding-top: 50px;
         }
 
         .header img {
-            width: 30%;
+            width: 100%;
             height: auto;
             display: block;
         }
 
         .header-text {
             position: absolute;
-            top: 100%;
+            top: 25%;
             right: 5%;
             background: rgba(255, 255, 255, 0.8);
             padding: 15px 20px;
@@ -96,7 +87,7 @@
             border-right: 3px solid #3E6259;
             width: 0;
             animation: typing 3s steps(30, end) forwards, blink 0.6s infinite;
-            text-align: right !important;
+            text-align: right;
         }
 
         @keyframes typing {
@@ -108,17 +99,42 @@
             50% { border-color: transparent; }
         }
 
-        /* Buttons with Icons */
+        /* Buttons with Background Image */
         .button-container {
+            display: flex;
+            width: 100%;
+            height: 50vh;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .button-section {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 50vh;
-            gap: 20px;
+            transition: flex 0.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .sell-section {
+            background-image: url("{% static 'images/Button-min.png' %}");
+        }
+
+        .buy-section {
+            background-image: url("{% static 'images/Button-min.png' %}");
+        }
+
+        .button-section:hover {
+            flex: 1.5;
+        }
+
+        .button-section:not(:hover) {
+            flex: 0.8;
         }
 
         .button {
-            background-color: #F4D06F;
+            background-color: rgba(244, 208, 111, 0.8);
             color: #3E6259;
             padding: 20px 40px;
             font-size: 20px;
@@ -131,20 +147,8 @@
             transition: transform 0.2s ease-in-out, background-color 0.3s;
         }
 
-        .button i {
-            font-size: 20px;
-            animation: bounceIcon 1.5s infinite;
-        }
-
-        @keyframes bounceIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
         .button:hover {
-            background-color: #A14D3A;
-            color: white;
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
         /* Footer */
@@ -164,7 +168,6 @@
             text-decoration: none;
             margin: 0 10px;
         }
-
     </style>
 </head>
 <body>
@@ -180,18 +183,21 @@
 
     <div class="main-content">
         <!-- Header with Image -->
-        padding-top: 60px;
         <div class="header">
             <img src="{% static 'images/header-min.png' %}" alt="Website Header">
             <div class="header-text">
-                <h1>پایان هر داستان شروع دیگریست </h1>
+                <h1>Welcome to Payan</h1>
             </div>
         </div>
 
-        <!-- Buttons with Icons -->
+        <!-- Buttons with Background Images -->
         <div class="button-container">
-            <button class="button"><i class="fas fa-compass"></i> خرید</button>
-            <button class="button"><i class="fas fa-users"></i> فروش</button>
+            <div class="button-section sell-section">
+                <button class="button"><i class="fas fa-hand-holding-usd"></i> Sell</button>
+            </div>
+            <div class="button-section buy-section">
+                <button class="button"><i class="fas fa-shopping-cart"></i> Buy</button>
+            </div>
         </div>
     </div>
 
