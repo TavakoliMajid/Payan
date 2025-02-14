@@ -189,51 +189,49 @@
             }
         }
 
-        /* Removed background and border for modal content */
+        /* Modal Content Layout: Vertical Arrangement */
         .modal-content {
             color: white;
             text-align: center;
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+            gap: 15px;
         }
 
+        /* Circle Buttons */
         .modal-content button {
             margin-top: 10px;
-            padding: 10px 20px;
+            padding: 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 50%; /* Circle shape */
             background-color: #3E6259;
             color: white;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            width: 80px;
+            height: 80px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Circle button hover animation */
+        .modal-content button:hover {
+            transform: scale(1.2);
+            background-color: #F4D06F;
         }
 
         /* Gender and type select with no borders or backgrounds */
         .modal-content select {
             padding: 8px;
-            margin: 10px 0;
             font-size: 16px;
             color: white;
             background: none;
             border: none;
             outline: none;
-        }
-
-        /* Explosion animation */
-        @keyframes explode {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-                background-color: #F4D06F;
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .modal-content button:hover {
-            animation: explode 0.4s ease-in-out;
         }
 
         /* Footer */
@@ -303,8 +301,8 @@
                 <option value="informal">Informal</option>
             </select>
 
-            <button onclick="goToBuyPage()">Go to Buy Page</button>
-            <button onclick="closeModal()">Cancel</button>
+            <button onclick="goToBuyPage()">Buy</button>
+            <button onclick="closeModal()">Close</button>
         </div>
     </div>
 
@@ -332,7 +330,6 @@
         }
 
         function goToBuyPage() {
-            // Example: Redirecting to another page
             window.location.href = "/buy";
         }
     </script>
