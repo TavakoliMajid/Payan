@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Payan</title>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         /* General Styling */
         body, html {
@@ -19,7 +18,7 @@
             flex-direction: column;
             align-items: center;
             scroll-behavior: smooth;
-            transition: opacity 1s ease-in-out; /* Page transition */
+            transition: opacity 1s ease-in-out;
         }
 
         /* Navigation Bar */
@@ -70,12 +69,6 @@
             padding: 15px 20px;
             border-radius: 8px;
             text-align: right;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .header-text:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.9);
         }
 
         /* Typing Animation */
@@ -122,7 +115,7 @@
         }
 
         .buy-section {
-            background-image: url("{% static 'images/Button-min.png' %}");
+            background-image: url("{% static 'images/buy.png' %}");
         }
 
         .button-section:hover {
@@ -144,117 +137,119 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: transform 0.2s ease-in-out, background-color 0.3s;
-        }
-
-        .button:hover {
-            transform: scale(1.2);
         }
 
         /* Modal Styling */
         .modal-overlay {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
+            right: 0;
+            width: 25%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: transparent;
             display: none;
             justify-content: center;
             align-items: center;
-            opacity: 0;
+            opacity: 1;
             animation-duration: 0.5s;
             animation-fill-mode: forwards;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Animation for showing the modal */
-        @keyframes fadeInSlideDown {
+        @keyframes fadeInSlideFromRight {
             from {
                 opacity: 0;
-                transform: translateY(-50px);
+                transform: translateX(100%);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
-        /* Animation for hiding the modal */
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-            }
-        }
-
-        /* Modal Content Layout: Vertical Arrangement */
+        /* Modal Content Layout */
         .modal-content {
             color: white;
             text-align: center;
             display: flex;
-            flex-direction: column; /* Arrange items vertically */
+            flex-direction: column;
             gap: 15px;
+            padding: 20px;
+            background-color: rgba(62, 98, 89, 0.8);
+            border-radius: 8px;
+            width: 100%;
+            height: 100%;
         }
 
-        /* Circle Buttons */
+        /* Preferences Ellipsoid */
+        .preferences-container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            margin: 20px 0;
+        }
+
         .modal-content button {
-            margin-top: 10px;
-            padding: 15px;
-            border: none;
-            border-radius: 50%; /* Circle shape */
+            border-radius: 50%;
             background-color: #3E6259;
             color: white;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
             width: 80px;
             height: 80px;
             font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s ease-in-out;
         }
 
-        /* Circle button hover animation */
-        .modal-content button:hover {
-            transform: scale(1.2);
-            background-color: #F4D06F;
-        }
-
-        /* Gender and type select with no borders or backgrounds */
-        .modal-content select {
-            padding: 8px;
-            font-size: 16px;
-            color: white;
-            background: none;
-            border: none;
-            outline: none;
-        }
-
-        /* Footer */
-        .footer {
+        #showGenderOptions {
             background-color: #3E6259;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            border: none;
+            padding: 0;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
         }
 
-        .footer a {
-            color: #F4D06F;
-            text-decoration: none;
-            margin: 0 10px;
+        #showGenderOptions img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        #genderOptions button, #typeOptions button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #genderOptions img, #typeOptions img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #typeOptions {
+            margin-top: 10px;
+        }
+
+        /* Back Button */
+        #backButton {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-
     <!-- Navigation Bar -->
     <div class="top-nav">
         <h3>Payan</h3>
@@ -265,7 +260,7 @@
     </div>
 
     <div class="main-content">
-        <!-- Header with Image -->
+        <!-- Header Section -->
         <div class="header">
             <img src="{% static 'images/header-min.png' %}" alt="Website Header">
             <div class="header-text">
@@ -273,7 +268,7 @@
             </div>
         </div>
 
-        <!-- Buttons with Background Images -->
+        <!-- Buttons Section -->
         <div class="button-container">
             <div class="button-section sell-section">
                 <button class="button"><i class="fas fa-hand-holding-usd"></i> Sell</button>
@@ -284,55 +279,93 @@
         </div>
     </div>
 
-    <!-- Modal for Buy Options -->
+    <!-- Modal Section -->
     <div id="buyModal" class="modal-overlay">
         <div class="modal-content">
-            <h2>Select Your Preferences</h2>
-            <label for="gender">Gender:</label>
-            <select id="gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="unisex">Unisex</option>
-            </select>
+            <div class="preferences-container">
+                <h2>Select Your Preferences</h2>
+            </div>
 
-            <label for="type">Type:</label>
-            <select id="type">
-                <option value="formal">Formal</option>
-                <option value="informal">Informal</option>
-            </select>
+            <button id="showGenderOptions" onclick="showGenderOptions()">
+                <img src="{% static 'images/man-and-woman.ico' %}" alt="Select Gender" style="width: 20px; height: 20px;">
+            </button>
 
-            <button onclick="goToBuyPage()">Buy</button>
+            <div id="genderOptions" style="display: none;">
+                <div>
+                    <button onclick="selectGender('male')" title="Male"><img src="{% static 'images/man-icon.ico' %}" alt="Male Icon"></button>
+                    <button onclick="selectGender('female')" title="Female"><img src="{% static 'images/female-icon.ico' %}" alt="Female Icon"></button>
+                </div>
+            </div>
+
+            <div id="typeOptions" style="display: none;">
+                <div>
+                    <button onclick="selectType('formal')"><img id="formalIcon" src="" alt="Formal Icon" title="Formal"></button>
+                    <button onclick="selectType('casual')"><img id="casualIcon" src="" alt="Casual Icon" title="Casual"></button>
+                </div>
+                <button id="backButton" onclick="goBack()">Back</button>
+            </div>
+
             <button onclick="closeModal()">Close</button>
         </div>
     </div>
 
     <!-- Footer Section -->
     <div class="footer">
-        <p>
-            <a href="#">About Us</a> |
-            <a href="#">Contact Us</a>
-        </p>
+        <p><a href="#">About Us</a> | <a href="#">Contact Us</a></p>
     </div>
 
     <script>
-        let modal = document.getElementById('buyModal');
-
         function showBuyModal() {
+            let modal = document.getElementById('buyModal');
             modal.style.display = 'flex';
-            modal.style.animation = 'fadeInSlideDown 0.5s forwards';
+            modal.style.animation = 'fadeInSlideFromRight 0.5s forwards';
         }
 
         function closeModal() {
-            modal.style.animation = 'fadeOut 0.5s';
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 500); // Delay hiding to complete the fade-out animation
+            let modal = document.getElementById('buyModal');
+            modal.style.display = 'none';
+            // Reset gender and type options visibility when closing modal
+            document.getElementById('genderOptions').style.display = 'none';
+            document.getElementById('typeOptions').style.display = 'none';
         }
 
-        function goToBuyPage() {
-            window.location.href = "/buy";
+        function showGenderOptions() {
+            let genderOptions = document.getElementById('genderOptions');
+            genderOptions.style.display = 'block'; // Show gender options
+        }
+
+        let selectedGender = null;
+
+        function selectGender(gender) {
+            console.log('Selected gender:', gender);
+            selectedGender = gender;
+            document.getElementById('genderOptions').style.display = 'none';
+            document.getElementById('typeOptions').style.display = 'block'; // Show type options after gender selection
+
+            // Update the icon source based on gender
+            let formalIcon = document.getElementById('formalIcon');
+            let casualIcon = document.getElementById('casualIcon');
+
+            if (gender === 'male') {
+                formalIcon.src = "{% static 'images/man-formal.ico' %}";
+                casualIcon.src = "{% static 'images/man-casual.ico' %}";
+            } else {
+                formalIcon.src = "{% static 'images/formal-female.ico' %}";
+                casualIcon.src = "{% static 'images/casual-female.ico' %}";
+            }
+        }
+
+        function selectType(type) {
+            console.log('Selected type:', type);
+            // Here you would typically handle what happens after type selection
+            // For now, we'll just log it
+        }
+
+        function goBack() {
+            document.getElementById('typeOptions').style.display = 'none';
+            document.getElementById('genderOptions').style.display = 'block';
+            selectedGender = null; // Reset selected gender
         }
     </script>
-
 </body>
 </html>
