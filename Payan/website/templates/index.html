@@ -108,8 +108,10 @@
             transition: flex 0.5s ease-in-out;
             background-size: cover;
             background-position: center;
+            cursor: pointer; /* Make sections look clickable */
         }
 
+        /* Different backgrounds for each button */
         .sell-section {
             background-image: url("{% static 'images/Button-min.png' %}");
         }
@@ -126,24 +128,10 @@
             flex: 0.8;
         }
 
-        .button {
-            background-color: rgba(244, 208, 111, 0.8);
-            color: #3E6259;
-            padding: 20px 40px;
-            font-size: 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
         /* Modal Styling */
         .modal-overlay {
             position: fixed;
             top: 0;
-            right: 0;
             width: 25%;
             height: 100%;
             background-color: transparent;
@@ -153,13 +141,38 @@
             opacity: 1;
             animation-duration: 0.5s;
             animation-fill-mode: forwards;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Remove the negative shadow for buy modal */
+        }
+
+        /* Specific styles for Buy modal */
+        #buyModal {
+            right: 0;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Shadow for buy modal */
+            animation-name: fadeInSlideFromRight;
+        }
+
+        /* Specific styles for Sell modal */
+        .sell-modal-overlay {
+            left: 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Shadow for sell modal */
+            animation-name: fadeInSlideFromLeft;
         }
 
         @keyframes fadeInSlideFromRight {
             from {
                 opacity: 0;
                 transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInSlideFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
             }
             to {
                 opacity: 1;
@@ -201,7 +214,7 @@
             justify-content: center;
         }
 
-        #showGenderOptions {
+        #showGenderOptions, #showGenderOptionsSell {
             background-color: #3E6259;
             border: none;
             padding: 0;
@@ -215,13 +228,13 @@
             margin: 10px 0;
         }
 
-        #showGenderOptions img {
+        #showGenderOptions img, #showGenderOptionsSell img {
             width: 20px;
             height: 20px;
             object-fit: contain;
         }
 
-        #genderOptions button, #typeOptions button {
+        #genderOptions button, #typeOptions button, #genderOptionsSell button, #typeOptionsSell button {
             background-color: transparent;
             border: none;
             padding: 0;
@@ -229,17 +242,17 @@
             cursor: pointer;
         }
 
-        #genderOptions img, #typeOptions img {
+        #genderOptions img, #typeOptions img, #genderOptionsSell img, #typeOptionsSell img {
             width: 40px;
             height: 40px;
         }
 
-        #typeOptions {
+        #typeOptions, #typeOptionsSell {
             margin-top: 10px;
         }
 
         /* Back Button */
-        #backButton {
+        #backButton, #backButtonSell {
             background-color: transparent;
             border: none;
             color: white;
@@ -270,16 +283,16 @@
 
         <!-- Buttons Section -->
         <div class="button-container">
-            <div class="button-section sell-section">
-                <button class="button"><i class="fas fa-hand-holding-usd"></i> Sell</button>
+            <div class="button-section sell-section" onclick="toggleSellModal()">
+                <!-- Removed the visible button for consistency with buy, the whole section is clickable -->
             </div>
-            <div class="button-section buy-section">
-                <button class="button" onclick="showBuyModal()"><i class="fas fa-shopping-cart"></i> Buy</button>
+            <div class="button-section buy-section" onclick="toggleBuyModal()">
+                <!-- Removed the visible button for consistency -->
             </div>
         </div>
     </div>
 
-    <!-- Modal Section -->
+    <!-- Modal Section for Buy -->
     <div id="buyModal" class="modal-overlay">
         <div class="modal-content">
             <div class="preferences-container">
@@ -305,7 +318,37 @@
                 <button id="backButton" onclick="goBack()">Back</button>
             </div>
 
-            <button onclick="closeModal()">Close</button>
+            <button onclick="toggleBuyModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Modal Section for Sell -->
+    <div id="sellModal" class="modal-overlay sell-modal-overlay">
+        <div class="modal-content">
+            <div class="preferences-container">
+                <h2>Select Your Preferences</h2>
+            </div>
+
+            <button id="showGenderOptionsSell" onclick="showGenderOptionsSell()">
+                <img src="{% static 'images/man-and-woman.ico' %}" alt="Select Gender" style="width: 20px; height: 20px;">
+            </button>
+
+            <div id="genderOptionsSell" style="display: none;">
+                <div>
+                    <button onclick="selectGenderSell('male')" title="Male"><img src="{% static 'images/man-icon.ico' %}" alt="Male Icon"></button>
+                    <button onclick="selectGenderSell('female')" title="Female"><img src="{% static 'images/female-icon.ico' %}" alt="Female Icon"></button>
+                </div>
+            </div>
+
+            <div id="typeOptionsSell" style="display: none;">
+                <div>
+                    <button onclick="selectTypeSell('formal')"><img id="formalIconSell" src="" alt="Formal Icon" title="Formal"></button>
+                    <button onclick="selectTypeSell('casual')"><img id="casualIconSell" src="" alt="Casual Icon" title="Casual"></button>
+                </div>
+                <button id="backButtonSell" onclick="goBackSell()">Back</button>
+            </div>
+
+            <button onclick="toggleSellModal()">Close</button>
         </div>
     </div>
 
@@ -315,56 +358,69 @@
     </div>
 
     <script>
-        function showBuyModal() {
+        let buyModalOpen = false;
+        let sellModalOpen = false;
+
+        function toggleBuyModal() {
             let modal = document.getElementById('buyModal');
-            modal.style.display = 'flex';
-            modal.style.animation = 'fadeInSlideFromRight 0.5s forwards';
+            if (!buyModalOpen) {
+                modal.style.display = 'flex';
+                modal.style.animation = 'fadeInSlideFromRight 0.5s forwards';
+            } else {
+                modal.style.display = 'none';
+                document.getElementById('genderOptions').style.display = 'none';
+                document.getElementById('typeOptions').style.display = 'none';
+            }
+            buyModalOpen = !buyModalOpen;
         }
 
-        function closeModal() {
-            let modal = document.getElementById('buyModal');
-            modal.style.display = 'none';
-            // Reset gender and type options visibility when closing modal
-            document.getElementById('genderOptions').style.display = 'none';
-            document.getElementById('typeOptions').style.display = 'none';
+        function toggleSellModal() {
+            let modal = document.getElementById('sellModal');
+            if (!sellModalOpen) {
+                modal.style.display = 'flex';
+                modal.style.animation = 'fadeInSlideFromLeft 0.5s forwards';
+            } else {
+                modal.style.display = 'none';
+                document.getElementById('genderOptionsSell').style.display = 'none';
+                document.getElementById('typeOptionsSell').style.display = 'none';
+            }
+            sellModalOpen = !sellModalOpen;
         }
 
         function showGenderOptions() {
-            let genderOptions = document.getElementById('genderOptions');
-            genderOptions.style.display = 'block'; // Show gender options
+            document.getElementById('genderOptions').style.display = 'block';
         }
-
-        let selectedGender = null;
 
         function selectGender(gender) {
-            console.log('Selected gender:', gender);
             selectedGender = gender;
             document.getElementById('genderOptions').style.display = 'none';
-            document.getElementById('typeOptions').style.display = 'block'; // Show type options after gender selection
-
-            // Update the icon source based on gender
-            let formalIcon = document.getElementById('formalIcon');
-            let casualIcon = document.getElementById('casualIcon');
-
-            if (gender === 'male') {
-                formalIcon.src = "{% static 'images/man-formal.ico' %}";
-                casualIcon.src = "{% static 'images/man-casual.ico' %}";
-            } else {
-                formalIcon.src = "{% static 'images/formal-female.ico' %}";
-                casualIcon.src = "{% static 'images/casual-female.ico' %}";
-            }
-        }
-
-        function selectType(type) {
-            console.log('Selected type:', type);
-            // Here you would typically handle what happens after type selection
-            // For now, we'll just log it
+            document.getElementById('typeOptions').style.display = 'block';
+            document.getElementById('formalIcon').src = gender === 'male' ? "{% static 'images/man-formal.ico' %}" : "{% static 'images/formal-female.ico' %}";
+            document.getElementById('casualIcon').src = gender === 'male' ? "{% static 'images/man-casual.ico' %}" : "{% static 'images/casual-female.ico' %}";
         }
 
         function goBack() {
             document.getElementById('typeOptions').style.display = 'none';
             document.getElementById('genderOptions').style.display = 'block';
-            selectedGender = null; // Reset selected gender
+            selectedGender = null;
+        }
+
+        function showGenderOptionsSell() {
+            document.getElementById('genderOptionsSell').style.display = 'block';
+        }
+
+        function selectGenderSell(gender) {
+            selectedGenderSell = gender;
+            document.getElementById('genderOptionsSell').style.display = 'none';
+            document.getElementById('typeOptionsSell').style.display = 'block';
+            document.getElementById('formalIconSell').src = gender === 'male' ? "{% static 'images/man-formal.ico' %}" : "{% static 'images/formal-female.ico' %}";
+            document.getElementById('casualIconSell').src = gender === 'male' ? "{% static 'images/man-casual.ico' %}" : "{% static 'images/casual-female.ico' %}";
+        }
+
+        function goBackSell() {
+            document.getElementById('typeOptionsSell').style.display = 'none';
+            document.getElementById('genderOptionsSell').style.display = 'block';
+            selectedGenderSell = null;
         }
     </script>
 </body>
