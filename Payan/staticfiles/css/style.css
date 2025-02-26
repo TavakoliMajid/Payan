@@ -1,0 +1,113 @@
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+header .logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Main Actions Section */
+.main-actions {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.action {
+    margin: 0 10px;
+}
+
+.action button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.action img {
+    height: 50px;
+    width: 50px;
+}
+
+/* Bubble Container */
+.bubble-container {
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.bubble {
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    animation: pop 0.3s ease-in-out;
+}
+
+.bubble:hover {
+    background-color: #388E3C;
+}
+
+@keyframes pop {
+    from {
+        transform: scale(0.5);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Selected Options Display */
+.selected-options {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Product Listings */
+.product-listings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px;
+}
+
+.product {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
