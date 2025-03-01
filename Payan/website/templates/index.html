@@ -91,34 +91,34 @@
         }
 
         .header-text {
-            background: rgba(255, 255, 255, 0.8);
+            background: #EAE7DC;
             padding: 20px 30px;
             border-radius: 8px;
             text-align: right;
             width: 100%;
-            margin-bottom: 32px; /* 2cm ≈ 32px spacing from buttons */
+            margin-bottom: 32px;
         }
 
         h1 {
             font-size: 2rem;
             font-weight: bold;
             text-align: right;
-            direction: rtl; /* Right-to-left text */
+            direction: rtl;
             display: inline-block;
-            animation: zoomIn 6s infinite; /* Zoom-in animation every 6 seconds */
+            animation: zoomIn 6s infinite;
         }
 
         @keyframes zoomIn {
             0% {
-                transform: scale(0); /* Start small */
+                transform: scale(0);
                 opacity: 0;
             }
             50% {
-                transform: scale(1); /* Full size */
+                transform: scale(1);
                 opacity: 1;
             }
             100% {
-                transform: scale(1); /* Stay full size until reset */
+                transform: scale(1);
                 opacity: 1;
             }
         }
@@ -311,19 +311,41 @@
 
         .auth-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 60px;
+            right: 20px;
+            width: 400px;
             background: rgba(0, 0, 0, 0.5);
             display: none;
-            justify-content: center;
-            align-items: center;
+            opacity: 0;
             z-index: 1000;
         }
 
+        @keyframes zoomInPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .auth-modal.open {
+            opacity: 1;
+            animation: zoomInPop 0.5s ease-out forwards;
+        }
+
+        .auth-modal.closing {
+            animation: fadeOut 0.5s forwards;
+        }
+
         .auth-modal-content {
-            background: white;
+            background: #DCD9C9;
             padding: 30px;
             border-radius: 8px;
             width: 400px;
@@ -331,8 +353,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             color: #3E6259;
             position: relative;
-            transform: scale(1);
-            transition: transform 0.5s ease-in-out;
         }
 
         @keyframes crumple {
@@ -395,7 +415,7 @@
             top: 10px;
             right: 10px;
             background: none;
-            border: none;
+            border: none; /* Already borderless, kept for clarity */
             font-size: 20px;
             color: #3E6259;
             cursor: pointer;
@@ -467,7 +487,7 @@
                 <input type="email" id="emailInput" placeholder="Enter your email" required>
                 <button onclick="checkEmail()">Continue</button>
                 <button class="google-btn" onclick="googleSignIn()">
-                    <img src="{% static 'images/google-icon.png' %}" alt="Google" style="width: 20px; height: 20px;">
+                    <img src="{% static 'images/google.png' %}" alt="Google" style="width: 20px; height: 20px;">
                 </button>
             </div>
 
@@ -565,6 +585,7 @@
         let users = JSON.parse(localStorage.getItem('users')) || {};
         let currentUser = null;
         let cartHasItems = false;
+        let authModalOpen = false; // Track modal state
 
         function navigateHome() {
             if (window.location.pathname === '/') {
@@ -594,8 +615,15 @@
         }
 
         document.getElementById('authButton').onclick = function() {
-            document.getElementById('authModal').style.display = 'flex';
-            resetAuthForms();
+            const modal = document.getElementById('authModal');
+            if (!authModalOpen) {
+                modal.style.display = 'flex';
+                modal.classList.add('open');
+                resetAuthForms();
+                authModalOpen = true;
+            } else {
+                closeAuthModal();
+            }
         }
 
         document.getElementById('authModal').onclick = function(event) {
@@ -605,11 +633,13 @@
         }
 
         function closeAuthModal() {
-            const modalContent = document.querySelector('.auth-modal-content');
-            modalContent.classList.add('closing');
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('open');
+            modal.classList.add('closing');
             setTimeout(() => {
-                document.getElementById('authModal').style.display = 'none';
-                modalContent.classList.remove('closing');
+                modal.style.display = 'none';
+                modal.classList.remove('closing');
+                authModalOpen = false;
             }, 500);
         }
 
