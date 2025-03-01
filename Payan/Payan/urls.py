@@ -1,23 +1,24 @@
-"""
-URL configuration for Payan project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+from website import views  # Import views correctly
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Home Page
+    path('', views.home, name='home'),
+
+    # Authentication Endpoints
+    path('check-email/', views.check_email, name='check_email'),
+    path('login/', views.login_user, name='login_user'),
+    path('guest-login/', views.guest_login, name='guest_login'),
+    path('signup/', views.signup, name='signup'),
+
+    # Buy Page (Ensure `buy.html` is inside `templates/`)
+    path('buy/', views.buy, name='buy'),
+    path('buy.html', TemplateView.as_view(template_name="buy.html"), name='buy_page'),
+
+    # Include other app URLs if necessary
     path('', include('website.urls')),
 ]
