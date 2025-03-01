@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Payan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* General Styling */
         body, html {
@@ -12,16 +13,15 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #EAE7DC; /* Cream */
-            color: #3E6259; /* Sage Green */
+            background-color: #EAE7DC;
+            color: #3E6259;
             display: flex;
             flex-direction: column;
             align-items: center;
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; /* Smooth scrolling for up arrow */
             transition: opacity 1s ease-in-out;
         }
 
-        /* Navigation Bar */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -30,6 +30,14 @@
             padding: 15px 40px;
             color: white;
             width: 100%;
+            position: fixed; /* Fixed to stay at top */
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-nav h3 {
+            margin: 0;
+            cursor: pointer; /* Indicate clickable */
         }
 
         .top-nav .nav-buttons {
@@ -49,21 +57,29 @@
             color: #F4D06F;
         }
 
-        /* Header Section */
+        /* Shake animation for body */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
         .header {
-            #position: relative;
             text-align: right;
-            #max-height: 100vh;
-            #width: 100%;
+            margin-top: 70px; /* Offset for fixed nav */
         }
 
         .header img {
             width: 40%;
             height: auto;
-            #margin: 0 auto;
             object-fit: cover;
             margin-right: 0;
-
             overflow: hidden;
             display: block;
         }
@@ -78,7 +94,6 @@
             text-align: right;
         }
 
-        /* Typing Animation */
         h1 {
             font-size: 2rem;
             font-weight: bold;
@@ -99,7 +114,6 @@
             50% { border-color: transparent; }
         }
 
-        /* Buttons with Background Image */
         .button-container {
             display: flex;
             justify-content: space-between;
@@ -117,10 +131,9 @@
             transition: flex 0.5s ease-in-out;
             background-size: cover;
             background-position: center;
-            cursor: pointer; /* Make sections look clickable */
+            cursor: pointer;
         }
 
-        /* Different backgrounds for each button */
         .sell-section {
             background-image: url("{% static 'images/Button-min.png' %}");
         }
@@ -137,59 +150,73 @@
             flex: 0.8;
         }
 
-        /* Modal Styling */
         .modal-overlay {
             position: fixed;
-            top: 0;
             width: 25%;
             height: 100%;
             background-color: transparent;
             display: none;
             justify-content: center;
             align-items: center;
-            opacity: 1;
-            animation-duration: 0.5s;
-            animation-fill-mode: forwards;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Remove the negative shadow for buy modal */
+            opacity: 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Specific styles for Buy modal */
         #buyModal {
             right: 0;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Shadow for buy modal */
-            animation-name: fadeInSlideFromRight;
+            top: 0;
         }
 
-        /* Specific styles for Sell modal */
         .sell-modal-overlay {
             left: 0;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Shadow for sell modal */
-            animation-name: fadeInSlideFromLeft;
+            bottom: 0;
         }
 
-        @keyframes fadeInSlideFromRight {
-            from {
+        @keyframes dotRevealDown {
+            0% {
                 opacity: 0;
-                transform: translateX(100%);
+                clip-path: inset(0 0 100% 0);
+                background: linear-gradient(90deg, rgba(62, 98, 89, 0) 50%, rgba(62, 98, 89, 1) 50%);
+                background-size: 10px 10px;
             }
-            to {
+            50% {
                 opacity: 1;
-                transform: translateX(0);
+                clip-path: inset(0 0 50% 0);
+                background: linear-gradient(90deg, rgba(62, 98, 89, 0.5) 50%, rgba(62, 98, 89, 1) 50%);
+                background-size: 10px 10px;
+            }
+            100% {
+                opacity: 1;
+                clip-path: inset(0 0 0 0);
+                background: none;
             }
         }
 
-        @keyframes fadeInSlideFromLeft {
-            from {
+        @keyframes dotRevealUp {
+            0% {
                 opacity: 0;
-                transform: translateX(-100%);
+                clip-path: inset(100% 0 0 0);
+                background: linear-gradient(90deg, rgba(62, 98, 89, 0) 50%, rgba(62, 98, 89, 1) 50%);
+                background-size: 10px 10px;
             }
-            to {
+            50% {
                 opacity: 1;
-                transform: translateX(0);
+                clip-path: inset(50% 0 0 0);
+                background: linear-gradient(90deg, rgba(62, 98, 89, 0.5) 50%, rgba(62, 98, 89, 1) 50%);
+                background-size: 10px 10px;
+            }
+            100% {
+                opacity: 1;
+                clip-path: inset(0 0 0 0);
+                background: none;
             }
         }
 
-        /* Modal Content Layout */
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
         .modal-content {
             color: white;
             text-align: center;
@@ -203,7 +230,6 @@
             height: 100%;
         }
 
-        /* Preferences Ellipsoid */
         .preferences-container {
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.6);
@@ -260,7 +286,6 @@
             margin-top: 10px;
         }
 
-        /* Back Button */
         #backButton, #backButtonSell {
             background-color: transparent;
             border: none;
@@ -269,20 +294,145 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .auth-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #3E6259;
+            position: relative;
+            transform: scale(1);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        @keyframes crumple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(0.7) rotate(10deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0.1) rotate(-20deg);
+                opacity: 0;
+            }
+        }
+
+        .auth-modal-content.closing {
+            animation: crumple 0.5s forwards;
+        }
+
+        .auth-modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #3E6259;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .auth-modal-content button {
+            background-color: #3E6259;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .auth-modal-content button:hover {
+            background-color: #F4D06F;
+            color: #3E6259;
+        }
+
+        .google-btn {
+            background-color: #4285F4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #3E6259;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .close-btn:hover {
+            color: #F4D06F;
+        }
+
+        /* Up Arrow Styling */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3E6259;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 0.8;
+        }
+
+        .scroll-to-top:hover {
+            opacity: 1;
+            background-color: #F4D06F;
+            color: #3E6259;
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <div class="top-nav">
-        <h3>Payan</h3>
+        <h3 onclick="navigateHome()">Payan</h3>
         <div class="nav-buttons">
             <button><i class="fas fa-search"></i> Search</button>
-            <button><i class="fas fa-user"></i> Log In</button>
+            <button id="authButton"><i class="fas fa-user"></i> Sign up | Login</button>
         </div>
     </div>
 
     <div class="main-content">
-        <!-- Header Section -->
         <div class="header">
             <img src="{% static 'images/header-min.png' %}" alt="Website Header">
             <div class="header-text">
@@ -290,35 +440,67 @@
             </div>
         </div>
 
-        <!-- Buttons Section -->
         <div class="button-container">
-            <div class="button-section sell-section" onclick="toggleSellModal()">
-                <!-- Removed the visible button for consistency with buy, the whole section is clickable -->
+            <div class="button-section sell-section" onclick="toggleSellModal()"></div>
+            <div class="button-section buy-section" onclick="toggleBuyModal()"></div>
+        </div>
+    </div>
+
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <button class="close-btn" onclick="closeAuthModal()">×</button>
+            <div id="emailCheck">
+                <h2>Welcome</h2>
+                <input type="email" id="emailInput" placeholder="Enter your email" required>
+                <button onclick="checkEmail()">Continue</button>
+                <button class="google-btn" onclick="googleSignIn()">
+                    <img src="{% static 'images/google-icon.png' %}" alt="Google" style="width: 20px; height: 20px;">
+                </button>
             </div>
-            <div class="button-section buy-section" onclick="toggleBuyModal()">
-                <!-- Removed the visible button for consistency -->
+
+            <div id="loginForm" style="display: none;">
+                <h2>Login</h2>
+                <input type="email" id="loginEmail" disabled>
+                <button onclick="completeLogin()">Login</button>
+            </div>
+
+            <div id="signupOptions" style="display: none;">
+                <h2>Continue as...</h2>
+                <button onclick="showSignupForm()">Sign Up</button>
+                <button onclick="showGuestForm()">Guest</button>
+            </div>
+
+            <div id="signupForm" style="display: none;">
+                <h2>Create Account</h2>
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                <input type="email" id="signupEmail" disabled>
+                <input type="tel" id="phone" placeholder="Phone Number" required>
+                <button onclick="completeSignup()">Sign Up</button>
+            </div>
+
+            <div id="guestForm" style="display: none;">
+                <h2>Guest Access</h2>
+                <input type="text" id="guestName" placeholder="Enter your name" required>
+                <button onclick="completeGuest()">Continue</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Section for Buy -->
     <div id="buyModal" class="modal-overlay">
         <div class="modal-content">
             <div class="preferences-container">
                 <h2>Select Your Preferences</h2>
             </div>
-
             <button id="showGenderOptions" onclick="showGenderOptions()">
-                <img src="{% static 'images/man-and-woman.ico' %}" alt="Select Gender" style="width: 20px; height: 20px;">
+                <img src="{% static 'images/man-and-woman.ico' %}" alt="Select Gender">
             </button>
-
             <div id="genderOptions" style="display: none;">
                 <div>
                     <button onclick="selectGender('male')" title="Male"><img src="{% static 'images/man-icon.ico' %}" alt="Male Icon"></button>
                     <button onclick="selectGender('female')" title="Female"><img src="{% static 'images/female-icon.ico' %}" alt="Female Icon"></button>
                 </div>
             </div>
-
             <div id="typeOptions" style="display: none;">
                 <div>
                     <button onclick="selectType('formal')"><img id="formalIcon" src="" alt="Formal Icon" title="Formal"></button>
@@ -326,29 +508,24 @@
                 </div>
                 <button id="backButton" onclick="goBack()">Back</button>
             </div>
-
             <button onclick="toggleBuyModal()">Close</button>
         </div>
     </div>
 
-    <!-- Modal Section for Sell -->
     <div id="sellModal" class="modal-overlay sell-modal-overlay">
         <div class="modal-content">
             <div class="preferences-container">
                 <h2>Select Your Preferences</h2>
             </div>
-
             <button id="showGenderOptionsSell" onclick="showGenderOptionsSell()">
-                <img src="{% static 'images/man-and-woman.ico' %}" alt="Select Gender" style="width: 20px; height: 20px;">
+                <img src="{% static 'images/man-and-woman.ico' %}" alt="Select Gender">
             </button>
-
             <div id="genderOptionsSell" style="display: none;">
                 <div>
                     <button onclick="selectGenderSell('male')" title="Male"><img src="{% static 'images/man-icon.ico' %}" alt="Male Icon"></button>
                     <button onclick="selectGenderSell('female')" title="Female"><img src="{% static 'images/female-icon.ico' %}" alt="Female Icon"></button>
                 </div>
             </div>
-
             <div id="typeOptionsSell" style="display: none;">
                 <div>
                     <button onclick="selectTypeSell('formal')"><img id="formalIconSell" src="" alt="Formal Icon" title="Formal"></button>
@@ -356,30 +533,174 @@
                 </div>
                 <button id="backButtonSell" onclick="goBackSell()">Back</button>
             </div>
-
             <button onclick="toggleSellModal()">Close</button>
         </div>
     </div>
 
-    <!-- Footer Section -->
     <div class="footer">
         <p><a href="#">About Us</a> | <a href="#">Contact Us</a></p>
     </div>
+
+    <button class="scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
         let buyModalOpen = false;
         let sellModalOpen = false;
         let selectedGender = null;
+        let users = JSON.parse(localStorage.getItem('users')) || {};
+        let currentUser = null;
+
+        // Navigate or shake based on current page
+        function navigateHome() {
+            if (window.location.pathname === '/') {
+                document.body.classList.add('shake');
+                setTimeout(() => document.body.classList.remove('shake'), 500);
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide scroll-to-top button based on scroll position
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.querySelector('.scroll-to-top');
+            if (window.scrollY > 100) { // Show after scrolling 100px
+                scrollButton.classList.add('visible');
+            } else {
+                scrollButton.classList.remove('visible');
+            }
+        });
+
+        document.getElementById('authButton').onclick = function() {
+            document.getElementById('authModal').style.display = 'flex';
+            resetAuthForms();
+        }
+
+        document.getElementById('authModal').onclick = function(event) {
+            if (event.target === this) {
+                closeAuthModal();
+            }
+        }
+
+        function closeAuthModal() {
+            const modalContent = document.querySelector('.auth-modal-content');
+            modalContent.classList.add('closing');
+            setTimeout(() => {
+                document.getElementById('authModal').style.display = 'none';
+                modalContent.classList.remove('closing');
+            }, 500);
+        }
+
+        function resetAuthForms() {
+            document.getElementById('emailCheck').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupOptions').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('guestForm').style.display = 'none';
+            document.getElementById('emailInput').value = '';
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function checkEmail() {
+            const email = document.getElementById('emailInput').value;
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            if (users[email]) {
+                document.getElementById('emailCheck').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('loginEmail').value = email;
+            } else {
+                document.getElementById('emailCheck').style.display = 'none';
+                document.getElementById('signupOptions').style.display = 'block';
+                document.getElementById('signupEmail').value = email;
+            }
+        }
+
+        function completeLogin() {
+            const email = document.getElementById('loginEmail').value;
+            currentUser = users[email];
+            closeAuthModal();
+            document.getElementById('authButton').innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
+        }
+
+        function showSignupForm() {
+            document.getElementById('signupOptions').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+        }
+
+        function showGuestForm() {
+            document.getElementById('signupOptions').style.display = 'none';
+            document.getElementById('guestForm').style.display = 'block';
+        }
+
+        function completeSignup() {
+            const email = document.getElementById('signupEmail').value;
+            const name = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phone = document.getElementById('phone').value;
+
+            if (!name || !lastName || !phone) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            users[email] = { name: `${name} ${lastName}`, phone: phone };
+            localStorage.setItem('users', JSON.stringify(users));
+            currentUser = users[email];
+            closeAuthModal();
+            document.getElementById('authButton').innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
+        }
+
+        function completeGuest() {
+            const name = document.getElementById('guestName').value;
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            currentUser = { name: name };
+            closeAuthModal();
+            document.getElementById('authButton').innerHTML = `<i class="fas fa-user"></i> ${name}`;
+        }
+
+        function googleSignIn() {
+            const mockGoogleUser = {
+                email: 'user@google.com',
+                name: 'Google User'
+            };
+            if (!users[mockGoogleUser.email]) {
+                users[mockGoogleUser.email] = { name: mockGoogleUser.name };
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            currentUser = mockGoogleUser;
+            closeAuthModal();
+            document.getElementById('authButton').innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
+        }
 
         function toggleBuyModal() {
             let modal = document.getElementById('buyModal');
             if (!buyModalOpen) {
                 modal.style.display = 'flex';
-                modal.style.animation = 'fadeInSlideFromRight 0.5s forwards';
+                modal.style.animation = 'dotRevealDown 0.8s forwards';
             } else {
-                modal.style.display = 'none';
-                document.getElementById('genderOptions').style.display = 'none';
-                document.getElementById('typeOptions').style.display = 'none';
+                modal.style.animation = 'fadeOut 0.5s forwards';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.style.animation = '';
+                    document.getElementById('genderOptions').style.display = 'none';
+                    document.getElementById('typeOptions').style.display = 'none';
+                }, 500);
             }
             buyModalOpen = !buyModalOpen;
         }
@@ -388,11 +709,15 @@
             let modal = document.getElementById('sellModal');
             if (!sellModalOpen) {
                 modal.style.display = 'flex';
-                modal.style.animation = 'fadeInSlideFromLeft 0.5s forwards';
+                modal.style.animation = 'dotRevealUp 0.8s forwards';
             } else {
-                modal.style.display = 'none';
-                document.getElementById('genderOptionsSell').style.display = 'none';
-                document.getElementById('typeOptionsSell').style.display = 'none';
+                modal.style.animation = 'fadeOut 0.5s forwards';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.style.animation = '';
+                    document.getElementById('genderOptionsSell').style.display = 'none';
+                    document.getElementById('typeOptionsSell').style.display = 'none';
+                }, 500);
             }
             sellModalOpen = !sellModalOpen;
         }
@@ -435,13 +760,11 @@
 
         function selectType(type) {
             if (selectedGender) {
-                // Redirect to buy.html with gender and type as query parameters
-                window.location.href = `buy.html?gender=${selectedGender}&type=${type}`;
+                window.location.href = `/buy.html?gender=${selectedGender}&type=${type}`;
             }
         }
 
         function selectTypeSell(type) {
-            // Here you might want to handle the sell action, but for this example, we'll just alert.
             alert(`You selected to sell ${selectedGenderSell} ${type} items.`);
         }
     </script>
