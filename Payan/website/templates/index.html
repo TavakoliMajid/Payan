@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پایان | خرید و فروش لباس‌های دست دوم</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/dana-font@v1.0.1/dist/font-face.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Tahoma', sans-serif;
+            font-family: 'Dana', sans-serif;
             background-color: #F8F8F2;
             color: #3E6259;
             text-align: center;
@@ -26,6 +27,7 @@
             padding: 10px 30px;
             background: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         .top-bar .logo {
@@ -56,10 +58,11 @@
             height: 120px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             color: white;
             font-size: 24px;
             font-weight: bold;
+            padding-left: 30px;
         }
 
         .logo-large {
@@ -73,21 +76,30 @@
             max-width: 800px;
             transition: all 0.3s ease-in-out;
             position: relative;
+            gap: 0;
         }
 
         .button-box {
             flex: 1;
-            background-color: #3E6259;
+            background-color: rgb(78, 86, 73);
             color: white;
             text-align: center;
             padding: 160px;
             font-size: 24px;
             font-weight: bold;
-            margin: 10px;
-            border-radius: 12px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
             position: relative;
+            margin: 0;
+        }
+
+        .button-box:first-child {
+            border-radius: 20px 0 0 20px;
+        }
+
+        .button-box:last-child {
+            border-radius: 0 20px 20px 0;
         }
 
         .button-box:hover {
@@ -101,31 +113,38 @@
         .modal {
             display: none;
             position: absolute;
-            top: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #D2B48C;
+            top: 100%;
+            left: 0;
+            background: rgba(210, 180, 140, 0.9);
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             border-radius: 10px;
             z-index: 1000;
-            width: 80%;
-            max-width: 400px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease-out;
+        }
+
+        .modal.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .auth-modal {
             display: none;
-            position: fixed; /* Changed to fixed for better visibility */
-            top: 50%;
+            position: absolute;
+            top: 100%;
+            right: auto;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background: #D2B48C;
+            transform: translateX(50%);
+            background: rgba(210, 180, 140, 0.9);
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             border-radius: 10px;
             z-index: 1000;
-            width: 80%;
-            max-width: 400px;
+            width: 300px;
             opacity: 0;
         }
 
@@ -135,8 +154,8 @@
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translate(-50%, -50%) translateY(-30px); }
-            to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .filter-options {
@@ -160,7 +179,7 @@
             margin-top: 10px;
             padding: 8px 12px;
             border: none;
-            background: #3E6259;
+            background: rgb(78, 86, 73);
             color: white;
             cursor: pointer;
             border-radius: 5px;
@@ -168,14 +187,14 @@
 
         .modal button:hover, .auth-modal button:hover {
             background: #F4D06F;
-            color: #3E6259;
+            color: rgb(78, 86, 73);
         }
 
         .auth-modal input {
             width: 100%;
             padding: 8px;
             margin: 10px 0;
-            border: 1px solid #3E6259;
+            border: 1px solid rgb(78, 86, 73);
             border-radius: 5px;
         }
 
@@ -188,20 +207,15 @@
             cursor: pointer;
             margin: 20px 50px 20px auto;
             display: block;
-            animation: zoomIn 1.5s ease-in-out forwards;
+            animation: shakeBlink 1.5s infinite;
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
+        @keyframes shakeBlink {
+            0% { transform: translateX(0); opacity: 1; }
+            25% { transform: translateX(-5px); opacity: 0.7; }
+            50% { transform: translateX(5px); opacity: 1; }
+            75% { transform: translateX(-5px); opacity: 0.7; }
+            100% { transform: translateX(0); opacity: 1; }
         }
 
         .typed-text {
@@ -212,10 +226,14 @@
         }
 
         footer {
-            background-color: #3E6259;
+            background-color: rgb(78, 86, 73);
             color: white;
             padding: 20px;
             margin-top: auto;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -223,7 +241,7 @@
     <div class="top-bar">
         <div class="logo" onclick="shakeScreen()">Payan.com</div>
         <div class="menu">
-            <a href="#" id="authButton" onclick="toggleAuthModal()">ثبت‌نام / ورود</a>
+            <a href="#" id="authButton" onclick="toggleAuthModal(event)">ثبت‌نام / ورود</a>
             <a href="#"><i class="fas fa-shopping-cart"></i></a>
         </div>
     </div>
@@ -233,20 +251,20 @@
     </div>
 
     <div class="logo-large">
-        <img src="{% static 'images/payan-logo.png' %}" alt="Payan Logo" width="150">
+        <img src="{% static 'images/payan-logo.png' %}" alt="Payan Logo" width="300">
     </div>
 
     <div class="buttons-container">
         <div class="button-box" onclick="toggleModal('buyModal')">خرید
             <div class="modal" id="buyModal">
                 <h3>انتخاب تنظیمات خرید</h3>
-                <div class="filter-options">
-                    <button><img src="{% static 'images/male.png' %}" alt="مردانه"></button>
-                    <button><img src="{% static 'images/female.png' %}" alt="زنانه"></button>
+                <div class="filter-options" id="genderOptionsBuy">
+                    <button onclick="selectGender('male', 'buy')"><img src="{% static 'images/male.png' %}" alt="مردانه"></button>
+                    <button onclick="selectGender('female', 'buy')"><img src="{% static 'images/female.png' %}" alt="زنانه"></button>
                 </div>
-                <div class="filter-options">
-                    <button><img src="{% static 'images/formal.png' %}" alt="رسمی"></button>
-                    <button><img src="{% static 'images/casual.png' %}" alt="غیررسمی"></button>
+                <div class="filter-options hidden" id="styleOptionsBuy">
+                    <button onclick="selectStyle('formal', 'buy')"><img src="{% static 'images/formal.png' %}" alt="رسمی"></button>
+                    <button onclick="selectStyle('casual', 'buy')"><img src="{% static 'images/casual.png' %}" alt="غیررسمی"></button>
                 </div>
                 <button onclick="toggleModal('buyModal')">بستن</button>
             </div>
@@ -254,13 +272,13 @@
         <div class="button-box" onclick="toggleModal('sellModal')">فروش
             <div class="modal" id="sellModal">
                 <h3>انتخاب تنظیمات فروش</h3>
-                <div class="filter-options">
-                    <button><img src="{% static 'images/male.png' %}" alt="مردانه"></button>
-                    <button><img src="{% static 'images/female.png' %}" alt="زنانه"></button>
+                <div class="filter-options" id="genderOptionsSell">
+                    <button onclick="selectGender('male', 'sell')"><img src="{% static 'images/male.png' %}" alt="مردانه"></button>
+                    <button onclick="selectGender('female', 'sell')"><img src="{% static 'images/female.png' %}" alt="زنانه"></button>
                 </div>
-                <div class="filter-options">
-                    <button><img src="{% static 'images/formal.png' %}" alt="رسمی"></button>
-                    <button><img src="{% static 'images/casual.png' %}" alt="غیررسمی"></button>
+                <div class="filter-options hidden" id="styleOptionsSell">
+                    <button onclick="selectStyle('formal', 'sell')"><img src="{% static 'images/formal.png' %}" alt="رسمی"></button>
+                    <button onclick="selectStyle('casual', 'sell')"><img src="{% static 'images/casual.png' %}" alt="غیررسمی"></button>
                 </div>
                 <button onclick="toggleModal('sellModal')">بستن</button>
             </div>
@@ -303,17 +321,70 @@
 
     <script>
         let userInput = '';
+        let selectedGender = '';
+        let selectedStyle = '';
+        let currentType = '';
 
         function toggleModal(modalId) {
             let modal = document.getElementById(modalId);
-            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+            modal.classList.toggle('active');
+            currentType = modalId === 'buyModal' ? 'buy' : 'sell';
+            selectedGender = '';
+            selectedStyle = '';
+            resetOptions();
+
+            // Close other modal if open
+            const otherModalId = modalId === 'buyModal' ? 'sellModal' : 'buyModal';
+            document.getElementById(otherModalId).classList.remove('active');
         }
 
-        function toggleAuthModal() {
+        function resetOptions() {
+            const type = currentType;
+            const genderOptions = document.getElementById(`genderOptions${type.charAt(0).toUpperCase() + type.slice(1)}`);
+            const styleOptions = document.getElementById(`styleOptions${type.charAt(0).toUpperCase() + type.slice(1)}`);
+
+            genderOptions.querySelectorAll('button').forEach(button => {
+                button.style.display = 'inline-block';
+            });
+            styleOptions.classList.add('hidden');
+        }
+
+        function selectGender(gender, type) {
+            selectedGender = gender;
+            const genderOptions = document.getElementById(`genderOptions${type.charAt(0).toUpperCase() + type.slice(1)}`);
+            const styleOptions = document.getElementById(`styleOptions${type.charAt(0).toUpperCase() + type.slice(1)}`);
+
+            genderOptions.querySelectorAll('button').forEach(button => {
+                if (!button.querySelector('img').alt.includes(gender === 'male' ? 'مردانه' : 'زنانه')) {
+                    button.style.display = 'none';
+                }
+            });
+
+            styleOptions.classList.remove('hidden');
+        }
+
+        function selectStyle(style, type) {
+            selectedStyle = style;
+            if (selectedGender && selectedStyle) {
+                if (type === 'buy') {
+                    window.location.href = `/buy?gender=${selectedGender}&style=${selectedStyle}`;
+                } else if (type === 'sell') {
+                    window.location.href = `/sell?gender=${selectedGender}&style=${selectedStyle}`;
+                }
+                toggleModal(`${type}Modal`);
+            }
+        }
+
+        function toggleAuthModal(event) {
+            event.preventDefault();
             let modal = document.getElementById('authModal');
+            let button = document.getElementById('authButton');
+            let buttonRect = button.getBoundingClientRect();
+
             modal.classList.toggle('active');
-            // Reset to initial step when opening
             if (modal.classList.contains('active')) {
+                modal.style.left = `${buttonRect.left}px`;
+                modal.style.transform = 'none';
                 document.getElementById('initialStep').style.display = 'block';
                 document.getElementById('optionsStep').style.display = 'none';
                 document.getElementById('loginStep').style.display = 'none';
@@ -323,8 +394,7 @@
 
         function checkUser() {
             userInput = document.getElementById('usernameEmail').value;
-            // Simulate checking if user exists (replace with actual backend check)
-            const userExists = false; // For demo purposes
+            const userExists = false;
             document.getElementById('initialStep').style.display = 'none';
             if (userExists) {
                 document.getElementById('loginStep').style.display = 'block';
