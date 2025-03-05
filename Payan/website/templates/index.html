@@ -230,6 +230,15 @@
             margin-top: auto;
             font-family: 'Dana', sans-serif; /* تغییر فونت فوتر به دانا */
         }
+        .logo-large {
+         position: absolute;
+         top: 80px; /* فاصله از بالای صفحه */
+         left: 50%; /* وسط صفحه به صورت افقی */
+         transform: translateX(-50%); /* برای وسط چین کردن لوگو */
+        }
+        .buttons-container {
+    margin-top: 200px; /* فاصله از بالای صفحه */
+}
     </style>
 </head>
 <body>
@@ -241,13 +250,14 @@
         </div>
     </div>
 
-    <div class="hero">
-        پایان هر داستان، شروع داستان دیگر
-    </div>
+   <div class="hero" style="text-align: left; padding-left: 900px;">
+    پایان هر داستان، شروع داستان دیگر
+</div>
 
     <div class="logo-large">
-        <img src="{% static 'images/payan-logo.png' %}" alt="Payan Logo" width="300">
+        <img src="{% static 'images/payan-logo.png' %}" alt="Payan Logo" width="250">
     </div>
+
 
     <div class="buttons-container">
         <div class="button-box" onclick="toggleModal('buyModal')">خرید
